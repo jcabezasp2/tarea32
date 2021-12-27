@@ -37,19 +37,34 @@ public class App {
 
 	}
 	
-	private static void showPokemos() {
+	private static void showPokemons() {
 		
 		for(int i = 0;
 				i < pokemons.length;
 				i++) {
 		
 			StringBuilder sb = new StringBuilder();
-			sb.append((i +1));
+			sb.append((i + 1));
 			sb.append(". ");
 			sb.append(pokemons[i].getName());
 			System.out.println(sb.toString());
 			
 		}
+		
+	}
+	
+	private static void initCombat() {
+		
+		
+		
+		showPokemons();
+		System.out.println("Elige el primer pokemon");
+		int primerPokemon = scanner.nextInt() - 1;
+		System.out.println("Elige el segundo pokemon");
+		int segundoPokemon = scanner.nextInt() - 1;
+		Battle.initBattle(pokemons[primerPokemon], pokemons[segundoPokemon]);
+		
+		
 		
 	}
 	
