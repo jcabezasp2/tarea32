@@ -16,6 +16,10 @@ public class Battle {
 					pokemon1.setHealth(pokemon1.getHealth() - pokemon2.getStrength());
 					narracionAtaque(pokemon2.getName(), pokemon1.getName(), pokemon2.getStrength(),
 							pokemon1.getHealth());
+					
+						if(pokemon1.getHealth() <= 0) {
+							System.out.println(narracionPerdido(pokemon1.getName()));
+						}
 
 				} else {
 					System.out.println(narracionPerdido(pokemon2.getName()));
@@ -31,6 +35,10 @@ public class Battle {
 					pokemon2.setHealth(pokemon2.getHealth() - pokemon1.getStrength());
 					narracionAtaque(pokemon1.getName(), pokemon2.getName(), pokemon1.getStrength(),
 							pokemon2.getHealth());
+					
+					if(pokemon2.getHealth() <= 0) {
+						System.out.println(narracionPerdido(pokemon2.getName()));
+					}
 
 				} else {
 
