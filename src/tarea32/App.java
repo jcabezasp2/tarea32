@@ -68,6 +68,38 @@ public class App {
 		
 	}
 	
+public static void main(String[] args) {
+        
+        int eleccion = 1;
+        
+        while(eleccion != 3) {
+        
+            System.out.println("Elija la opción");
+            System.out.println("1. Utilizar los pokemon del juego");
+            System.out.println("2. Crear los pokemons aleatoriamente");
+            System.out.println("3. Salir");
+        
+            eleccion = scanner.nextInt();
+            
+            switch(eleccion) {
+            
+            case 1: initPokemons();
+                    initCombat();
+                    break;
+            case 2: initPokemonsRandomly();
+                    initCombat();
+                    break;
+            case 3: System.out.println("Hasta luego");
+            
+                
+            
+            }
+            
+            
+        }
+        
+        
+    }
 	
 	
 		//METODOS PROPIOS
