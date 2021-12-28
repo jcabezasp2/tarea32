@@ -20,6 +20,10 @@ public class Battle {
 						nuevaSalud = pokemon1.getHealth() - pokemon2.getStrength();
 						pokemon1.setHealth(nuevaSalud);
 						System.out.println(narracionAtaque(pokemon2.getName(), pokemon1.getName(), pokemon2.getStrength(), nuevaSalud));
+						
+						if(nuevaSalud <= 0) {
+							System.out.println(narracionPerdido(pokemon2.getName()));
+						}
 					}
 				
 			}else {
@@ -38,6 +42,10 @@ public class Battle {
 							nuevaSalud = pokemon2.getHealth() - pokemon1.getStrength();
 							pokemon2.setHealth(nuevaSalud);
 							System.out.println(narracionAtaque(pokemon1.getName(), pokemon2.getName(), pokemon1.getStrength(), nuevaSalud));
+							
+							if(nuevaSalud <= 0) {
+								System.out.println(narracionPerdido(pokemon2.getName()));
+							}
 						}
 				
 			}
@@ -62,7 +70,7 @@ public class Battle {
 		sb.append(nombrePokemonRecibe);
 		sb.append(" le quedan ");
 		sb.append(saludRestante);
-		sb.append(" vida.\n");
+		sb.append("puntos de vida.\n");
 		sb.append("--------------------------------------------------------");
 
 		return sb.toString();

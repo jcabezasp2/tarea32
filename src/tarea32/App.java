@@ -22,7 +22,9 @@ public class App {
 	}
 
 	private static void initPokemonsRandomly() {
-
+			
+			scanner.nextLine();
+		
 		for (int i = 0; i < pokemons.length; i++) {
 
 			StringBuilder sb = new StringBuilder();
@@ -73,11 +75,22 @@ public static void main(String[] args) {
         int eleccion = 1;
         
         while(eleccion != 3) {
-        
-            System.out.println("Elija la opción");
+        	
+        	System.out.println("Elija la opción");
             System.out.println("1. Utilizar los pokemon del juego");
             System.out.println("2. Crear los pokemons aleatoriamente");
             System.out.println("3. Salir");
+            
+        	while(!scanner.hasNextInt()) {
+        		System.out.println("Entrada incorrecta");
+        		System.out.println("Elija la opción");
+                System.out.println("1. Utilizar los pokemon del juego");
+                System.out.println("2. Crear los pokemons aleatoriamente");
+                System.out.println("3. Salir");
+        		scanner.next();
+        	}
+        
+            
         
             eleccion = scanner.nextInt();
             
@@ -90,6 +103,9 @@ public static void main(String[] args) {
                     initCombat();
                     break;
             case 3: System.out.println("Hasta luego");
+            		break;
+            default: System.out.println("Opcion incorrecta");
+            		break;
             
                 
             
