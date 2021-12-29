@@ -22,7 +22,7 @@ public class Battle {
 						System.out.println(narracionAtaque(pokemon2.getName(), pokemon1.getName(), pokemon2.getStrength(), nuevaSalud));
 						
 						if(nuevaSalud <= 0) {
-							System.out.println(narracionPerdido(pokemon2.getName()));
+							System.out.println(narracionPerdido(pokemon1.getName()));
 						}
 					}
 				

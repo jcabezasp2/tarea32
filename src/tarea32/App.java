@@ -6,6 +6,7 @@ public class App {
 
 	private static final int NUM_POKEMONS = 5;
 	private static Pokemon[] pokemons = new Pokemon[NUM_POKEMONS];
+	private static Pokemon[] pokemonsBattle = new Pokemon[NUM_POKEMONS];
 	private static Scanner scanner = new Scanner(System.in);
 
 	private static void initPokemons() {
@@ -39,6 +40,23 @@ public class App {
 
 	}
 	
+	private static void initPokemonsBattle() {
+		
+		final String[] NOMBRES = {"charizard", "blastoise", "venusaur", "bulbasur", "pikachu", "arceus", "mew", "dialga", "palkia", "giratina", "darkrai", "cresellia", "kyogre", "groudon", "rayquaza"};
+		
+		
+		for(int i = 0;
+				i < pokemonsBattle.length;
+				i++) {
+			
+			pokemonsBattle[i] = new Pokemon();
+			String nombreAleatorio = NOMBRES[(int)(Math.random() * (NOMBRES.length - 1)) ];
+			pokemonsBattle[i].setName(nombreAleatorio);
+			
+		}
+		
+	}
+	
 	private static void showPokemons() {
 		
 		for(int i = 0;
@@ -52,6 +70,23 @@ public class App {
 			System.out.println(sb.toString());
 			
 		}
+		
+	}
+	
+	private static void battleRoyaleShowPokemons() {
+		
+		for(int i = 0;
+				i < pokemons.length;
+				i++) {
+			if(pokemons[i].getHealth() > 0) {
+				StringBuilder sb = new StringBuilder();
+				sb.append((i + 1));
+				sb.append(". ");
+				sb.append(pokemons[i].getName());
+				System.out.println(sb.toString());
+			}
+		}
+		
 		
 	}
 	
@@ -70,6 +105,48 @@ public class App {
 		
 	}
 	
+	private static void battleRoyale() {
+		initPokemons();
+		initPokemonsBattle();
+		int contadorVivos = 5;
+		int contadorOponentes = 0;
+		while(contadorVivos != 0 && contadorOponentes < 5) {
+			//COMPRUEBA SI QUEDAN POKEMONS VIVOS
+			contadorVivos = 5;
+			for(int i = 0;
+					i < pokemons.length;
+					i++) {
+				
+				if(pokemons[i].getHealth() <= 0) {
+					contadorVivos--;
+				}
+			}
+			//BATALLA
+			battleRoyaleShowPokemons();
+			System.out.println("Elige un pokemon");
+			int pokemonElegido = scanner.nextInt() - 1;
+			Battle.initBattle(pokemons[pokemonElegido], pokemonsBattle[contadorOponentes]);
+			
+			if(pokemons[pokemonElegido].getHealth() > 0) {
+				contadorOponentes++;
+			}else {
+				battleRoyaleShowPokemons();
+				System.out.println("Elige un pokemon");
+				pokemonElegido = scanner.nextInt() - 1;
+				Battle.initBattle(pokemons[pokemonElegido], pokemonsBattle[contadorOponentes]);
+			}
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+	}
+	
 public static void main(String[] args) {
         
         int eleccion = 1;
@@ -80,6 +157,7 @@ public static void main(String[] args) {
             System.out.println("1. Utilizar los pokemon del juego");
             System.out.println("2. Crear los pokemons aleatoriamente");
             System.out.println("3. Salir");
+            System.out.println("4. Battle royale");
             
         	while(!scanner.hasNextInt()) {
         		System.out.println("Entrada incorrecta");
@@ -87,6 +165,7 @@ public static void main(String[] args) {
                 System.out.println("1. Utilizar los pokemon del juego");
                 System.out.println("2. Crear los pokemons aleatoriamente");
                 System.out.println("3. Salir");
+                System.out.println("4. Battle royale");
         		scanner.next();
         	}
         
@@ -103,6 +182,8 @@ public static void main(String[] args) {
                     initCombat();
                     break;
             case 3: System.out.println("Hasta luego");
+            		break;
+            case 4: battleRoyale();
             		break;
             default: System.out.println("Opcion incorrecta");
             		break;
