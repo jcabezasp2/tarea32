@@ -94,11 +94,41 @@ public class App {
 		
 		
 		
-		showPokemons();
-		System.out.println("Elige el primer pokemon");
-		int primerPokemon = scanner.nextInt() - 1;
+		
+		
+		int primerPokemon = 5;
+		while(primerPokemon < 0  || primerPokemon >= pokemons.length) {
+			showPokemons();
+			System.out.println("Elige el primer pokemon");	
+			while(!scanner.hasNextInt()) {
+				System.out.println("Entrada no valida");
+				System.out.println("Elige el primer pokemon");
+				scanner.next();
+			}
+		primerPokemon = scanner.nextInt() - 1;
+		
+		if(primerPokemon < 0  || primerPokemon >= pokemons.length) {
+			System.out.println("Entrada no valida");
+		}
+		}
+		int segundoPokemon = 5;
+		while(segundoPokemon < 0  || segundoPokemon >= pokemons.length) {
+			showPokemons();	
 		System.out.println("Elige el segundo pokemon");
-		int segundoPokemon = scanner.nextInt() - 1;
+		
+		while(!scanner.hasNextInt()) {
+			System.out.println("Entrada no valida");
+			System.out.println("Elige el segundo pokemon");
+			scanner.next();
+		}
+		
+		segundoPokemon = scanner.nextInt() - 1;
+		
+		if(segundoPokemon < 0  || segundoPokemon >= pokemons.length) {
+			System.out.println("Entrada no valida");
+		}
+		}
+		
 		Battle.initBattle(pokemons[primerPokemon], pokemons[segundoPokemon]);
 		
 		
@@ -110,9 +140,9 @@ public class App {
 		initPokemonsBattle();
 		int contadorVivos = 5;
 		int contadorOponentes = 0;
-		while(contadorVivos != 0 && contadorOponentes < 5) {
+		while(contadorVivos != 0 && contadorOponentes != 5) {
 			//COMPRUEBA SI QUEDAN POKEMONS VIVOS
-			contadorVivos = 5;
+			
 			for(int i = 0;
 					i < pokemons.length;
 					i++) {
@@ -127,7 +157,7 @@ public class App {
 			int pokemonElegido = scanner.nextInt() - 1;
 			Battle.initBattle(pokemons[pokemonElegido], pokemonsBattle[contadorOponentes]);
 			
-			if(pokemons[pokemonElegido].getHealth() > 0) {
+			if(pokemonsBattle[contadorOponentes].getHealth() <= 0) {
 				contadorOponentes++;
 			}else {
 				battleRoyaleShowPokemons();
@@ -138,6 +168,12 @@ public class App {
 			
 			
 			
+		}
+		
+		if (contadorVivos > 0) {
+			System.out.println("GANASTE");
+		} else {
+			System.out.println("PERDISTE");
 		}
 		
 		

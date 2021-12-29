@@ -82,6 +82,7 @@ public class Battle {
 
 		sb.append(nombrePerdedor);
 		sb.append(" ha perdido el combate");
+		sb.append("\n--------------------------------------------------------");
 
 		return sb.toString();
 
