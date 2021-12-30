@@ -70,7 +70,7 @@ public class Battle {
 		sb.append(nombrePokemonRecibe);
 		sb.append(" le quedan ");
 		sb.append(saludRestante);
-		sb.append("puntos de vida.\n");
+		sb.append(" puntos de vida.\n");
 		sb.append("--------------------------------------------------------");
 
 		return sb.toString();

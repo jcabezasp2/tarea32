@@ -5,9 +5,12 @@ import java.util.Scanner;
 public class App {
 
 	private static final int NUM_POKEMONS = 5;
+	private static final int BATTLEROYALE = 1;
+	private static final int BATTLE = 2;
 	private static Pokemon[] pokemons = new Pokemon[NUM_POKEMONS];
 	private static Pokemon[] pokemonsBattle = new Pokemon[NUM_POKEMONS];
 	private static Scanner scanner = new Scanner(System.in);
+	
 
 	private static void initPokemons() {
 		Pokemon charizard = new Pokemon(100, 50, 50, "charizard");
@@ -92,42 +95,10 @@ public class App {
 	
 	private static void initCombat() {
 		
+		int primerPokemon = eligeUnPokemon("primer", BATTLE, 9);
+		int daError = primerPokemon;
+		int segundoPokemon = eligeUnPokemon("segundo", BATTLE, daError);
 		
-		
-		
-		
-		int primerPokemon = 5;
-		while(primerPokemon < 0  || primerPokemon >= pokemons.length) {
-			showPokemons();
-			System.out.println("Elige el primer pokemon");	
-			while(!scanner.hasNextInt()) {
-				System.out.println("Entrada no valida");
-				System.out.println("Elige el primer pokemon");
-				scanner.next();
-			}
-		primerPokemon = scanner.nextInt() - 1;
-		
-		if(primerPokemon < 0  || primerPokemon >= pokemons.length) {
-			System.out.println("Entrada no valida");
-		}
-		}
-		int segundoPokemon = 5;
-		while(segundoPokemon < 0  || segundoPokemon >= pokemons.length) {
-			showPokemons();	
-		System.out.println("Elige el segundo pokemon");
-		
-		while(!scanner.hasNextInt()) {
-			System.out.println("Entrada no valida");
-			System.out.println("Elige el segundo pokemon");
-			scanner.next();
-		}
-		
-		segundoPokemon = scanner.nextInt() - 1;
-		
-		if(segundoPokemon < 0  || segundoPokemon >= pokemons.length) {
-			System.out.println("Entrada no valida");
-		}
-		}
 		
 		Battle.initBattle(pokemons[primerPokemon], pokemons[segundoPokemon]);
 		
@@ -140,35 +111,24 @@ public class App {
 		initPokemonsBattle();
 		int contadorVivos = 5;
 		int contadorOponentes = 0;
-		while(contadorVivos != 0 && contadorOponentes != 5) {
-			//COMPRUEBA SI QUEDAN POKEMONS VIVOS
+		while(contadorVivos >= 0 && contadorOponentes <= 4) {
 			
-			for(int i = 0;
-					i < pokemons.length;
-					i++) {
-				
-				if(pokemons[i].getHealth() <= 0) {
-					contadorVivos--;
-				}
-			}
-			//BATALLA
-			battleRoyaleShowPokemons();
-			System.out.println("Elige un pokemon");
-			int pokemonElegido = scanner.nextInt() - 1;
+			
+			int pokemonElegido = eligeUnPokemon("" , BATTLEROYALE, 9);
 			Battle.initBattle(pokemons[pokemonElegido], pokemonsBattle[contadorOponentes]);
 			
 			if(pokemonsBattle[contadorOponentes].getHealth() <= 0) {
 				contadorOponentes++;
 			}else {
-				battleRoyaleShowPokemons();
-				System.out.println("Elige un pokemon");
-				pokemonElegido = scanner.nextInt() - 1;
+				contadorVivos--;
+				pokemonElegido = eligeUnPokemon("" , BATTLEROYALE, 9);
 				Battle.initBattle(pokemons[pokemonElegido], pokemonsBattle[contadorOponentes]);
 			}
 			
 			
 			
 		}
+		
 		
 		if (contadorVivos > 0) {
 			System.out.println("GANASTE");
@@ -262,5 +222,49 @@ public static void main(String[] args) {
 
 		return resultado;
 
+	}
+	
+	private static int eligeUnPokemon(String orden, int tipo, int prohibido) {
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("Elige el ");
+		if(tipo == BATTLE) {
+			sb.append(orden);
+			sb.append(" ");
+		}
+		sb.append("pokemon");
+		
+		int pokemonElegido = 5;
+		while(pokemonElegido < 0  || pokemonElegido >= pokemons.length|| pokemonElegido == prohibido) {
+			if(tipo == BATTLE) {
+				showPokemons();	
+			} else if (tipo == BATTLEROYALE) {
+				battleRoyaleShowPokemons();
+			}
+			
+			System.out.println(sb.toString());
+			while(!scanner.hasNextInt()) {
+				System.out.println("Entrada no valida");
+				System.out.println(sb.toString());
+				if(tipo == BATTLE) {
+					showPokemons();	
+				} else if (tipo == BATTLEROYALE) {
+					battleRoyaleShowPokemons();
+				}
+				scanner.next();
+			}
+		pokemonElegido = scanner.nextInt() - 1;
+		
+		if(pokemonElegido < 0  || pokemonElegido >= pokemons.length || pokemonElegido == prohibido) {
+			System.out.println("Entrada no valida");
+		}
+		
+		if(tipo == BATTLEROYALE && pokemons[pokemonElegido].getHealth() <= 0) {
+			System.out.println("Entrada no valida");
+		}
+		
+		}
+		
+		return pokemonElegido;
 	}
 }
