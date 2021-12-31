@@ -107,39 +107,25 @@ public class App {
 	private static void battleRoyale() {
 		initPokemons();
 		initPokemonsBattle();
-		int contadorVivos = 5;
-		int contadorOponentes = 0;
-		while(contadorVivos >= 0 && contadorOponentes <= 4) {
+		int contadorVivos = NUM_POKEMONS;
+		for(int i = 0;
+				i < pokemonsBattle.length;
+				i++) {
 			
-			
-			int pokemonElegido = eligeUnPokemon("" , BATTLEROYALE, 9);
-			Battle.initBattle(pokemons[pokemonElegido], pokemonsBattle[contadorOponentes]);
-			
-			if(pokemonsBattle[contadorOponentes].getHealth() <= 0) {
-				contadorOponentes++;
-			}else {
-				contadorVivos--;
-				pokemonElegido = eligeUnPokemon("" , BATTLEROYALE, 9);
-				Battle.initBattle(pokemons[pokemonElegido], pokemonsBattle[contadorOponentes]);
-			}
-			
-			
-			
+			while(pokemonsBattle[i].getHealth() > 0 && contadorVivos > 0) {
+				int pokemonElegido = eligeUnPokemon("" , BATTLEROYALE, 9);
+				Battle.initBattle(pokemons[pokemonElegido], pokemonsBattle[i]);
+				if(pokemons[pokemonElegido].getHealth() <= 0) {
+					contadorVivos--;
+				} // FIN DEL IF
+				} //FIN DEL WHILE
+		} // FIN DEL FOR	
+		if(contadorVivos > 0) {
+			System.out.println("Ganaste");
+		}else {
+			System.out.println("Perdiste");
 		}
-		
-		
-		if (contadorVivos > 0 && contadorOponentes == 5) {
-			System.out.println("GANASTE");
-		} else {
-			System.out.println("PERDISTE");
-		}
-		
-		
-		
-		
-		
-		
-	}
+	} //FIN DEL METODO
 	
 public static void main(String[] args) {
         
@@ -233,7 +219,7 @@ public static void main(String[] args) {
 		sb.append("pokemon");
 		
 		int pokemonElegido = 5;
-		while(pokemonElegido < 0  || pokemonElegido >= pokemons.length|| pokemonElegido == prohibido) {
+		while(pokemonElegido < 0  || pokemonElegido >= NUM_POKEMONS || pokemonElegido == prohibido) {
 			if(tipo == BATTLE) {
 				showPokemons();	
 			} else if (tipo == BATTLEROYALE) {
@@ -253,7 +239,7 @@ public static void main(String[] args) {
 			}
 		pokemonElegido = scanner.nextInt() - 1;
 		
-		if(pokemonElegido < 0  || pokemonElegido >= pokemons.length || pokemonElegido == prohibido) {
+		if(pokemonElegido < 0  || pokemonElegido >= pokemons.length || pokemonElegido == prohibido ) {
 			System.out.println("Entrada no valida");
 		}
 		
@@ -261,7 +247,7 @@ public static void main(String[] args) {
 			System.out.println("Entrada no valida");
 		}
 		
-		}
+		} // FIN DEL BUCLE
 		
 		return pokemonElegido;
 	}
