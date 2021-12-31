@@ -2,54 +2,40 @@ package tarea32;
 
 public class Battle {
 	
-
 	public static void initBattle(Pokemon pokemon1, Pokemon pokemon2) {
-
+		final boolean PRIMER_POKEMON = true;
+		final boolean SEGUNDO_POKEMON = false;
+		boolean turno;
+		if (pokemon1.getSpeed() >= pokemon2.getSpeed()) {
+			turno = PRIMER_POKEMON;	
+		}else {
+			turno = SEGUNDO_POKEMON;
+		}
+		
+		
 		while (pokemon1.getHealth() > 0 && pokemon2.getHealth() > 0) {
-
-			if(pokemon1.getSpeed() > pokemon2.getSpeed()) {
-				
-				ataque(pokemon1, pokemon2);
-				System.out.println(narracionAtaque(pokemon1.getName(), pokemon2.getName(), pokemon1.getStrength(), pokemon2.getHealth()));
-					
-					if(pokemon2.getHealth() <= 0) {
-						System.out.println(narracionPerdido(pokemon2.getName()));
-					}
-					
-					else {
-						
-						ataque(pokemon2, pokemon1);
-						System.out.println(narracionAtaque(pokemon2.getName(), pokemon1.getName(), pokemon2.getStrength(), pokemon1.getHealth()));
-						
-						if(pokemon1.getHealth() <= 0) {
-							System.out.println(narracionPerdido(pokemon1.getName()));
-						}
-					}
-				
-			}else {
-				
-					ataque(pokemon2, pokemon1);
-					System.out.println(narracionAtaque(pokemon2.getName(), pokemon1.getName(), pokemon2.getStrength(), pokemon1.getHealth()));
-						
-						if(pokemon1.getHealth() <= 0) {
-							System.out.println(narracionPerdido(pokemon1.getName()));
-						}
-						
-						else {
-							
-							ataque(pokemon1, pokemon2);
-							System.out.println(narracionAtaque(pokemon1.getName(), pokemon2.getName(), pokemon1.getStrength(), pokemon2.getHealth()));
-							
-							if(pokemon2.getHealth() <= 0) {
-								System.out.println(narracionPerdido(pokemon2.getName()));
-							}
-						}
-				
 			
+			if(turno == PRIMER_POKEMON) {
+					
+					ataque(pokemon1, pokemon2);
+					turno = SEGUNDO_POKEMON;
+						if(pokemon2.getHealth() <= 0) {
+							System.out.println(narracionPerdido(pokemon2.getName()));
+						}
+				
+			} else if(turno == SEGUNDO_POKEMON) {
+				
+				ataque(pokemon2, pokemon1);
+					turno = PRIMER_POKEMON;
+					if(pokemon1.getHealth() <= 0) {
+						System.out.println(narracionPerdido(pokemon1.getName()));
+					}
 			}
-		} // FIN DEL BUCLE
 			
-	} // FIN DEL METODO INITBATTLE
+		} //FIN DEL BUCLE
+	
+	} // FIN DEL METODO
+		
 
 	private static String narracionAtaque(String nombrePokemonAtaca, String nombrePokemonRecibe, int fuerza,
 			int saludRestante) {
@@ -88,6 +74,7 @@ public class Battle {
 	private static void ataque(Pokemon ataca, Pokemon recibe) {
 		int nuevaSalud = recibe.getHealth() - ataca.getStrength();
 		recibe.setHealth(nuevaSalud);
+		System.out.println(narracionAtaque(ataca.getName(), recibe.getName(), ataca.getStrength(), recibe.getHealth()));
 	}
 
 }

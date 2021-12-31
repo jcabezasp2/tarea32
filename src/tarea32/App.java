@@ -100,10 +100,8 @@ public class App {
 		int segundoPokemon = eligeUnPokemon("segundo", BATTLE, daError);
 		
 		
-		Battle.initBattle(pokemons[primerPokemon], pokemons[segundoPokemon]);
-		
-		
-		
+			Battle.initBattle(pokemons[primerPokemon], pokemons[segundoPokemon]);	
+				
 	}
 	
 	private static void battleRoyale() {
@@ -130,7 +128,7 @@ public class App {
 		}
 		
 		
-		if (contadorVivos > 0) {
+		if (contadorVivos > 0 && contadorOponentes == 5) {
 			System.out.println("GANASTE");
 		} else {
 			System.out.println("PERDISTE");
