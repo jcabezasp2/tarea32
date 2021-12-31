@@ -1,54 +1,51 @@
 package tarea32;
 
 public class Battle {
+	
 
 	public static void initBattle(Pokemon pokemon1, Pokemon pokemon2) {
 
 		while (pokemon1.getHealth() > 0 && pokemon2.getHealth() > 0) {
 
 			if(pokemon1.getSpeed() > pokemon2.getSpeed()) {
-				int nuevaSalud = pokemon2.getHealth() - pokemon1.getStrength();
-				pokemon2.setHealth(nuevaSalud);
-				System.out.println(narracionAtaque(pokemon1.getName(), pokemon2.getName(), pokemon1.getStrength(), nuevaSalud));
+				
+				ataque(pokemon1, pokemon2);
+				System.out.println(narracionAtaque(pokemon1.getName(), pokemon2.getName(), pokemon1.getStrength(), pokemon2.getHealth()));
 					
-					if(nuevaSalud <= 0) {
+					if(pokemon2.getHealth() <= 0) {
 						System.out.println(narracionPerdido(pokemon2.getName()));
 					}
 					
 					else {
 						
-						nuevaSalud = pokemon1.getHealth() - pokemon2.getStrength();
-						pokemon1.setHealth(nuevaSalud);
-						System.out.println(narracionAtaque(pokemon2.getName(), pokemon1.getName(), pokemon2.getStrength(), nuevaSalud));
+						ataque(pokemon2, pokemon1);
+						System.out.println(narracionAtaque(pokemon2.getName(), pokemon1.getName(), pokemon2.getStrength(), pokemon1.getHealth()));
 						
-						if(nuevaSalud <= 0) {
+						if(pokemon1.getHealth() <= 0) {
 							System.out.println(narracionPerdido(pokemon1.getName()));
 						}
 					}
 				
 			}else {
 				
-				if(pokemon2.getSpeed() > pokemon1.getSpeed()) {
-					int nuevaSalud = pokemon1.getHealth() - pokemon2.getStrength();
-					pokemon1.setHealth(nuevaSalud);
-					System.out.println(narracionAtaque(pokemon2.getName(), pokemon1.getName(), pokemon2.getStrength(), nuevaSalud));
+					ataque(pokemon2, pokemon1);
+					System.out.println(narracionAtaque(pokemon2.getName(), pokemon1.getName(), pokemon2.getStrength(), pokemon1.getHealth()));
 						
-						if(nuevaSalud <= 0) {
+						if(pokemon1.getHealth() <= 0) {
 							System.out.println(narracionPerdido(pokemon1.getName()));
 						}
 						
 						else {
 							
-							nuevaSalud = pokemon2.getHealth() - pokemon1.getStrength();
-							pokemon2.setHealth(nuevaSalud);
-							System.out.println(narracionAtaque(pokemon1.getName(), pokemon2.getName(), pokemon1.getStrength(), nuevaSalud));
+							ataque(pokemon1, pokemon2);
+							System.out.println(narracionAtaque(pokemon1.getName(), pokemon2.getName(), pokemon1.getStrength(), pokemon2.getHealth()));
 							
-							if(nuevaSalud <= 0) {
+							if(pokemon2.getHealth() <= 0) {
 								System.out.println(narracionPerdido(pokemon2.getName()));
 							}
 						}
 				
-			}
+			
 			}
 		} // FIN DEL BUCLE
 			
@@ -86,6 +83,11 @@ public class Battle {
 
 		return sb.toString();
 
+	}
+	
+	private static void ataque(Pokemon ataca, Pokemon recibe) {
+		int nuevaSalud = recibe.getHealth() - ataca.getStrength();
+		recibe.setHealth(nuevaSalud);
 	}
 
 }
