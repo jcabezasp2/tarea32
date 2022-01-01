@@ -138,6 +138,7 @@ public static void main(String[] args) {
             System.out.println("2. Crear los pokemons aleatoriamente");
             System.out.println("3. Salir");
             System.out.println("4. Battle royale");
+            System.out.println("5. Palacio sangriento");
             
         	while(!scanner.hasNextInt()) {
         		System.out.println("Entrada incorrecta");
@@ -146,6 +147,7 @@ public static void main(String[] args) {
                 System.out.println("2. Crear los pokemons aleatoriamente");
                 System.out.println("3. Salir");
                 System.out.println("4. Battle royale");
+                System.out.println("5. Palacio sangriento");
         		scanner.next();
         	}
         
@@ -164,6 +166,8 @@ public static void main(String[] args) {
             case 3: System.out.println("Hasta luego");
             		break;
             case 4: battleRoyale();
+            		break;
+            case 5: palacioSangriento();
             		break;
             default: System.out.println("Opcion incorrecta");
             		break;
@@ -254,4 +258,31 @@ public static void main(String[] args) {
 		
 		return pokemonElegido;
 	} // FIN DEL METODO
+	
+	
+	// AMPLIACION LIBRE
+	
+	private static void palacioSangriento(){
+		scanner.nextLine();
+		int contadorDeRondas = 0;
+		Pokemon jugador = new Pokemon();
+		System.out.println("Ponle un nombre a tu pokemon");
+		jugador.setName(scanner.nextLine());
+		
+		while(jugador.getHealth() > 0) {
+			initPokemonsBattle();
+			for(int i = 0;
+					i < pokemonsBattle.length && jugador.getHealth() > 0;
+					i++) {
+				Battle.initBattle(jugador, pokemonsBattle[i]);
+				if(jugador.getHealth() > 0) {
+					contadorDeRondas++;	
+				}
+				
+			}
+			
+		}
+		System.out.println("Tu pokemon ha sobrevivido a " + contadorDeRondas + " combates");
+	}
+	
 }
