@@ -212,14 +212,18 @@ public static void main(String[] args) {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("Elige el ");
+		
 		if(tipo == BATTLE) {
 			sb.append(orden);
 			sb.append(" ");
 		}
+		
 		sb.append("pokemon");
 		
 		int pokemonElegido = 5;
+		
 		while(pokemonElegido < 0  || pokemonElegido >= NUM_POKEMONS || pokemonElegido == prohibido) {
+			
 			if(tipo == BATTLE) {
 				showPokemons();	
 			} else if (tipo == BATTLEROYALE) {
@@ -227,6 +231,7 @@ public static void main(String[] args) {
 			}
 			
 			System.out.println(sb.toString());
+			
 			while(!scanner.hasNextInt()) {
 				System.out.println("Entrada no valida");
 				System.out.println(sb.toString());
@@ -237,18 +242,16 @@ public static void main(String[] args) {
 				}
 				scanner.next();
 			}
+			
 		pokemonElegido = scanner.nextInt() - 1;
 		
-		if(pokemonElegido < 0  || pokemonElegido >= pokemons.length || pokemonElegido == prohibido ) {
+		if(pokemonElegido < 0  || pokemonElegido >= pokemons.length || pokemonElegido == prohibido || pokemons[pokemonElegido].getHealth() <= 0) {
 			System.out.println("Entrada no valida");
 		}
 		
-		if(tipo == BATTLEROYALE && pokemons[pokemonElegido].getHealth() <= 0) {
-			System.out.println("Entrada no valida");
-		}
 		
 		} // FIN DEL BUCLE
 		
 		return pokemonElegido;
-	}
+	} // FIN DEL METODO
 }
