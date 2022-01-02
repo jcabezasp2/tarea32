@@ -11,6 +11,7 @@ public class App {
 	private static Pokemon[] pokemonsBattle = new Pokemon[NUM_POKEMONS];
 	private static Scanner scanner = new Scanner(System.in);
 	
+	
 
 	private static void initPokemons() {
 		Pokemon charizard = new Pokemon(100, 50, 50, "charizard");
@@ -45,7 +46,7 @@ public class App {
 	
 	private static void initPokemonsBattle() {
 		
-		final String[] NOMBRES = {"charizard", "blastoise", "venusaur", "bulbasur", "pikachu", "arceus", "mew", "dialga", "palkia", "giratina", "darkrai", "cresellia", "kyogre", "groudon", "rayquaza"};
+		final String[] NOMBRES = {"charizard", "blastoise", "venusaur", "bulbasur", "pikachu", "arceus", "dialga", "palkia", "giratina", "darkrai", "cresellia", "kyogre", "groudon", "rayquaza"};
 		
 		
 		for(int i = 0;
@@ -271,6 +272,8 @@ public static void main(String[] args) {
 		
 		while(jugador.getHealth() > 0) {
 			initPokemonsBattle();
+			showPokemonsPalacioSangriento(jugador);
+			
 			for(int i = 0;
 					i < pokemonsBattle.length && jugador.getHealth() > 0;
 					i++) {
@@ -282,7 +285,51 @@ public static void main(String[] args) {
 			}
 			
 		}
-		System.out.println("Tu pokemon ha sobrevivido a " + contadorDeRondas + " combates");
+		System.out.println("Tu pokemon ha ganado " + contadorDeRondas + " combates");
+	}
+	
+	private static void showPokemonsPalacioSangriento(Pokemon jugador) {
+
+		StringBuilder sb = new StringBuilder();
+		
+
+		sb.append("\tNOMBRE");
+		sb.append("  \t\tFUERZA");
+		sb.append("\tVELOCIDAD");
+		sb.append("  SALUD\n");
+		sb.append("-----------------------------------------------------------------\n");
+		
+		sb.append("Tu \t");
+		sb.append(jugador.getName());
+		sb.append("  \t\t  ");
+		sb.append(jugador.getStrength());
+		sb.append("\t   ");
+		sb.append(jugador.getSpeed());
+		sb.append("\t    ");
+		sb.append(jugador.getHealth());
+		sb.append("\n");
+		
+		
+		for(int i = 0;
+				i < pokemonsBattle.length;
+				i++) {
+			sb.append(i + 1);
+			sb.append(". \t");
+			sb.append(pokemonsBattle[i].getName());
+			sb.append("  \t\t  ");
+			sb.append(pokemonsBattle[i].getStrength());
+			sb.append("\t   ");
+			sb.append(pokemonsBattle[i].getSpeed());
+			sb.append("\t    ");
+			sb.append(pokemonsBattle[i].getHealth());
+			sb.append("\n");
+			
+		}
+		
+		
+		
+		
+		System.out.println(sb.toString());
 	}
 	
 }
