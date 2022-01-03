@@ -301,6 +301,10 @@ public static void main(String[] args) {
 					contadorDeRondas++;	
 				}
 				
+				if (contadorDeRondas % 3 == 0) {
+					initPokemonsBattle();
+				}
+				
 			
 			
 		}
