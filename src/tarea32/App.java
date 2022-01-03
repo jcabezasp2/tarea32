@@ -7,10 +7,11 @@ public class App {
 	private static final int NUM_POKEMONS = 5;
 	private static final int BATTLEROYALE = 1;
 	private static final int BATTLE = 2;
+	private static final int PALACIO_SANGRIENTO = 3;
 	private static Pokemon[] pokemons = new Pokemon[NUM_POKEMONS];
 	private static Pokemon[] pokemonsBattle = new Pokemon[NUM_POKEMONS];
 	private static Scanner scanner = new Scanner(System.in);
-	
+	private static Pokemon jugador = new Pokemon();
 	
 
 	private static void initPokemons() {
@@ -46,7 +47,7 @@ public class App {
 	
 	private static void initPokemonsBattle() {
 		
-		final String[] NOMBRES = {"charizard", "blastoise", "venusaur", "bulbasur", "pikachu", "arceus", "dialga", "palkia", "giratina", "darkrai", "cresellia", "kyogre", "groudon", "rayquaza"};
+		final String[] NOMBRES = {"charizard", "blastoise", "venusaur","mew", "bulbasur", "pikachu", "arceus", "dialga", "palkia", "giratina", "darkrai", "cresellia", "kyogre", "groudon", "rayquaza"};
 		
 		
 		for(int i = 0;
@@ -184,7 +185,7 @@ public static void main(String[] args) {
     }
 	
 	
-		//METODOS PROPIOS
+		
 	private static String numeracion(int numero) {
 
 		String resultado = "";
@@ -216,14 +217,22 @@ public static void main(String[] args) {
 	private static int eligeUnPokemon(String orden, int tipo, int prohibido) {
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("Elige el ");
 		
-		if(tipo == BATTLE) {
-			sb.append(orden);
-			sb.append(" ");
+		if(tipo == BATTLE || tipo == BATTLEROYALE) {
+			sb.append("Elige el ");
+			
+			if(tipo == BATTLE) {
+				sb.append(orden);
+				sb.append(" ");
+			}
+			
+			sb.append("pokemon");	
 		}
 		
-		sb.append("pokemon");
+		if (tipo == PALACIO_SANGRIENTO) {
+			sb.append("Elige contrincante");
+		}
+		
 		
 		int pokemonElegido = 5;
 		
@@ -233,6 +242,8 @@ public static void main(String[] args) {
 				showPokemons();	
 			} else if (tipo == BATTLEROYALE) {
 				battleRoyaleShowPokemons();
+			}else if(tipo == PALACIO_SANGRIENTO) {
+				showPokemonsPalacioSangriento();
 			}
 			
 			System.out.println(sb.toString());
@@ -244,15 +255,25 @@ public static void main(String[] args) {
 					showPokemons();	
 				} else if (tipo == BATTLEROYALE) {
 					battleRoyaleShowPokemons();
+				} else if(tipo == PALACIO_SANGRIENTO) {
+					showPokemonsPalacioSangriento();
 				}
+				
+				
 				scanner.next();
 			}
 			
 		pokemonElegido = scanner.nextInt() - 1;
 		
-		if(pokemonElegido < 0  || pokemonElegido >= pokemons.length || pokemonElegido == prohibido || pokemons[pokemonElegido].getHealth() <= 0) {
+		if(tipo == BATTLE && (pokemonElegido < 0  || pokemonElegido >= pokemons.length || pokemonElegido == prohibido)) {
+			System.out.println("Entrada no valida");
+		}else if(tipo == BATTLEROYALE && (pokemonElegido < 0  || pokemonElegido >= pokemons.length || pokemons[pokemonElegido].getHealth() <= 0)) {
+			System.out.println("Entrada no valida");
+		} else if(tipo == PALACIO_SANGRIENTO && (pokemonElegido < 0  || pokemonElegido >= pokemonsBattle.length || pokemonsBattle[pokemonElegido].getHealth() <= 0)) {
 			System.out.println("Entrada no valida");
 		}
+		
+		
 		
 		
 		} // FIN DEL BUCLE
@@ -266,29 +287,27 @@ public static void main(String[] args) {
 	private static void palacioSangriento(){
 		scanner.nextLine();
 		int contadorDeRondas = 0;
-		Pokemon jugador = new Pokemon();
+		initPokemonsBattle();
 		System.out.println("Ponle un nombre a tu pokemon");
 		jugador.setName(scanner.nextLine());
+		jugador.setHealth(301);
 		
 		while(jugador.getHealth() > 0) {
-			initPokemonsBattle();
-			showPokemonsPalacioSangriento(jugador);
 			
-			for(int i = 0;
-					i < pokemonsBattle.length && jugador.getHealth() > 0;
-					i++) {
-				Battle.initBattle(jugador, pokemonsBattle[i]);
+			int contrincante = eligeUnPokemon("" , PALACIO_SANGRIENTO, 9);
+			
+				Battle.initBattle(jugador, pokemonsBattle[contrincante]);
 				if(jugador.getHealth() > 0) {
 					contadorDeRondas++;	
 				}
 				
-			}
+			
 			
 		}
 		System.out.println("Tu pokemon ha ganado " + contadorDeRondas + " combates");
 	}
 	
-	private static void showPokemonsPalacioSangriento(Pokemon jugador) {
+	private static void showPokemonsPalacioSangriento() {
 
 		StringBuilder sb = new StringBuilder();
 		
@@ -299,8 +318,11 @@ public static void main(String[] args) {
 		sb.append("  SALUD\n");
 		sb.append("-----------------------------------------------------------------\n");
 		
-		sb.append("Tu \t");
+		sb.append("Tu \t");		
 		sb.append(jugador.getName());
+		if(jugador.getName().length() <= 5) {
+			sb.append("\t");
+		}
 		sb.append("  \t\t  ");
 		sb.append(jugador.getStrength());
 		sb.append("\t   ");
@@ -313,16 +335,22 @@ public static void main(String[] args) {
 		for(int i = 0;
 				i < pokemonsBattle.length;
 				i++) {
-			sb.append(i + 1);
-			sb.append(". \t");
-			sb.append(pokemonsBattle[i].getName());
-			sb.append("  \t\t  ");
-			sb.append(pokemonsBattle[i].getStrength());
-			sb.append("\t   ");
-			sb.append(pokemonsBattle[i].getSpeed());
-			sb.append("\t    ");
-			sb.append(pokemonsBattle[i].getHealth());
-			sb.append("\n");
+			if(pokemonsBattle[i].getHealth() > 0) {
+				sb.append(i + 1);
+				sb.append(". \t");
+				sb.append(pokemonsBattle[i].getName());
+				if(pokemonsBattle[i].getName().length() <= 5) {
+					sb.append("\t");
+				}
+				sb.append("  \t\t  ");
+				sb.append(pokemonsBattle[i].getStrength());
+				sb.append("\t   ");
+				sb.append(pokemonsBattle[i].getSpeed());
+				sb.append("\t    ");
+				sb.append(pokemonsBattle[i].getHealth());
+				sb.append("\n");	
+			}
+			
 			
 		}
 		
